@@ -20,23 +20,26 @@ const startBot = () => {
   }
 };
 
-client.on('messageCreate', (msg) => {
-  if (process.env.DEBUG) {
-    console.log('messageCreate', { msg });
-  }
-  if (msg.author.bot) return;
-  if (!msg.content.startsWith(prefix)) return; // do nothing if command is not preceded with prefix
+client.on('interactionCreate', (interaction) => {
+  console.log('interactionCreate', {interaction});
+});
 
-  const userCmd = msg.content.slice(prefix.length);
+
+client.on('messageCreate', (message) => {
+  console.log('messageCreate', { msg: message });
+  if (message.author.bot) return;
+  if (!message.content.startsWith(prefix)) return; // do nothing if command is not preceded with prefix
+
+  const userCmd = message.content.slice(prefix.length);
 
   if (userCmd === commands.getName) {
-    msg.reply(msg.author.username);
+    message.reply(message.author.username);
   } else if (userCmd === commands.beep) {
-    msg.reply('beep boop beep');
+    message.reply('beep boop beep');
   } else if (userCmd === commands.boop) {
-    msg.reply('boop beep boop');
+    message.reply('boop beep boop');
   } else {
-    msg.reply('bloop');
+    message.reply('bloop');
   }
 });
 
