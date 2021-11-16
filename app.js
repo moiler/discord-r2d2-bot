@@ -1,6 +1,6 @@
 const { Client } = require('discord.js');
 const { botIntents, prefix, commands } = require('./config/config');
-const config = require('./config');
+const config = require('./config/default');
 
 const client = new Client({
   intents: botIntents,
@@ -13,7 +13,11 @@ client.on('ready', () => {
 
 const startBot = () => {
   console.log('Starting bot');
-  client.login(config.DISCORD_TOKEN);
+  try {
+    client.login(config.DISCORD_TOKEN);
+  } catch (error) {
+    console.error("Error starting bot", { error })
+  }
 };
 
 client.on('messageCreate', (msg) => {
@@ -27,7 +31,7 @@ client.on('messageCreate', (msg) => {
   } else if (cmd === commands.boop) {
     msg.reply('boop beep boop');
   } else {
-    
+
     return;
   }
 });
