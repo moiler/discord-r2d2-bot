@@ -13,6 +13,7 @@ const botIntents = [
 ];
 
 const commands = {
+    getName: 'get-name',
     beep: 'beep',
     boop: 'boop'
 };

@@ -21,18 +21,20 @@ const startBot = () => {
 };
 
 client.on('messageCreate', (msg) => {
-  if (msg.author.bot || !msg.content.startsWith(prefix))
-    return; // do nothing if command is not preceded with prefix
 
-  const cmd = msg.content.slice(prefix.length);
+  if (msg.author.bot) return;
+  if (!msg.content.startsWith(prefix)) return; // do nothing if command is not preceded with prefix
 
-  if (cmd === commands.beep) {
+  const userCmd = msg.content.slice(prefix.length);
+
+  if (userCmd === commands.getName) {
+    msg.reply(msg.author.username);
+  } else if (userCmd === commands.beep) {
     msg.reply('beep boop beep');
-  } else if (cmd === commands.boop) {
+  } else if (userCmd === commands.boop) {
     msg.reply('boop beep boop');
   } else {
-
-    return;
+    msg.reply('bloop');
   }
 });
 
