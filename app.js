@@ -21,22 +21,23 @@ const startBot = () => {
 };
 
 client.on('interactionCreate', (interaction) => {
-  console.log('interactionCreate', {interaction});
+  if (config.IS_DEBUG) { console.log('interactionCreate', { interaction }); }
 });
 
 
 client.on('messageCreate', (message) => {
-  console.log('messageCreate', { msg: message });
+  if (config.IS_DEBUG) { console.log('messageCreate', { msg: message }); }
+
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return; // do nothing if command is not preceded with prefix
 
-  const userCmd = message.content.slice(prefix.length);
+  const command = message.content.slice(prefix.length);
 
-  if (userCmd === commands.getName) {
+  if (command === commands.getName) {
     message.reply(message.author.username);
-  } else if (userCmd === commands.beep) {
+  } else if (command === commands.beep) {
     message.reply('beep boop beep');
-  } else if (userCmd === commands.boop) {
+  } else if (command === commands.boop) {
     message.reply('boop beep boop');
   } else {
     message.reply('bloop');
