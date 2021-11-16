@@ -21,7 +21,9 @@ const startBot = () => {
 };
 
 client.on('messageCreate', (msg) => {
-
+  if (process.env.DEBUG) {
+    console.log('messageCreate', { msg });
+  }
   if (msg.author.bot) return;
   if (!msg.content.startsWith(prefix)) return; // do nothing if command is not preceded with prefix
 
