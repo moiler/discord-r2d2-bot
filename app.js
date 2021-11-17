@@ -36,12 +36,27 @@ client.on('messageCreate', (message) => {
   if (command === commands.getName) {
     message.reply(message.author.username);
   } else if (command === commands.beep) {
-    message.reply('beep boop beep');
+    play(message, "https://www.soundboard.com/mediafiles/mt/MTQ1MzI4MzAzMTQ1Mzgw_jwPFPnna9_2bs.mp3", 'beep boop beep');
+    //message.reply('beep boop beep');
   } else if (command === commands.boop) {
     message.reply('boop beep boop');
   } else {
     message.reply('bloop');
   }
 });
+
+function play(message, file, text) {
+  var voiceChannel = message.member.voiceChannel;
+
+  if (!voiceChannel)
+    return message.reply(text)
+
+  voiceChannel.join()
+    .then(connection => {
+      const dispatcher = connection.playFile(file);
+      dispatcher.on("end", end => { voiceChannel.leave() });
+    })
+    .catch(console.error);
+}
 
 module.exports = startBot;
