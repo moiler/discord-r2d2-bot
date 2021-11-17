@@ -36,7 +36,7 @@ client.on('messageCreate', (message) => {
   if (command === commands.getName) {
     message.reply(message.author.username);
   } else if (command === commands.beep) {
-    play(message, "https://www.soundboard.com/mediafiles/mt/MTQ1MzI4MzAzMTQ1Mzgw_jwPFPnna9_2bs.mp3", 'beep boop beep =/');
+    play(message, "https://www.soundboard.com/mediafiles/mt/MTQ1MzI4MzAzMTQ1Mzgw_jwPFPnna9_2bs.mp3", 'beep boop beep =)');
     //message.reply('beep boop beep');
   } else if (command === commands.boop) {
     message.reply('boop beep boop');
