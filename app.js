@@ -48,15 +48,15 @@ client.on('messageCreate', (message) => {
 function play(message, file, text) {
   var voiceChannel = message.member.voiceChannel;
 
-  if (!voiceChannel)
-    return message.reply(text)
+  //if (!voiceChannel)
+  //  return message.reply(text)
 
-  voiceChannel.join()
-    .then(connection => {
-      const dispatcher = connection.playFile(file);
-      dispatcher.on("end", end => { voiceChannel.leave() });
-    })
-    .catch(console.error);
+  voiceChannel.join().then(connection => {
+    const dispatcher = connection.playFile(file);
+    dispatcher.on("end", end => {
+      voiceChannel.leave()
+    });
+  }).catch(console.error);
 }
 
 module.exports = startBot;
