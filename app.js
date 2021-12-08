@@ -1,5 +1,11 @@
 const { Client } = require('discord.js');
-const { botIntents, prefix, commands } = require('./config/config');
+
+const {
+  botIntents,
+  prefix,
+  commands
+} = require('./config/config');
+
 const config = require('./config/default');
 
 const client = new Client({
@@ -26,18 +32,27 @@ client.on('interactionCreate', (interaction) => {
 
 
 client.on('messageCreate', (message) => {
-  if (config.IS_DEBUG) { console.log('messageCreate', { msg: message }); }
+  if (config.IS_DEBUG) {
+    console.log('messageCreate', { msg: message });
+  }
 
-  if (message.author.bot) return;
-  if (!message.content.startsWith(prefix)) return; // do nothing if command is not preceded with prefix
+  if (message.author.bot)
+    return;
+
+  // do nothing if command is not preceded with prefix
+  if (!message.content.startsWith(prefix))
+    return;
 
   const command = message.content.slice(prefix.length);
 
   if (command === commands.getName) {
     message.reply(message.author.username);
   } else if (command === commands.beep) {
-    //play(message, "https://www.soundboard.com/mediafiles/mt/MTQ1MzI4MzAzMTQ1Mzgw_jwPFPnna9_2bs.mp3", 'beep boop beep =)');
-    message.reply('beep boop beep');
+    play({
+      message,
+      file: 'https://www.soundboard.com/mediafiles/mt/MTQ1MzI4MzAzMTQ1Mzgw_jwPFPnna9_2bs.mp3',
+      text: 'beep boop beep =)'
+    });
   } else if (command === commands.boop) {
     message.reply('boop beep boop');
   } else {
@@ -45,11 +60,11 @@ client.on('messageCreate', (message) => {
   }
 });
 
-function play(message, file, text) {
+function play({ message, file, text }) {
   var voiceChannel = message.member.voiceChannel;
 
-  //if (!voiceChannel)
-  //  return message.reply(text)
+  if (!voiceChannel)
+    return message.reply(text);
 
   voiceChannel.join().then(connection => {
     const dispatcher = connection.playFile(file);
